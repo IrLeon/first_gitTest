@@ -1,0 +1,130 @@
+
+<section class="game">
+<div onclick="AddSymbol(0,0)" class="up left" id="index00"></div>
+<div onclick="AddSymbol(0,1)" class="up center" id="index01"></div>
+<div onclick="AddSymbol(0,2)" class="up right" id="index02"></div>
+<div onclick="AddSymbol(1,0)" class="middle left" id="index10"></div>
+<div onclick="AddSymbol(1,1)" class="middle center" id="index11"></div>
+<div onclick="AddSymbol(1,2)" class="middle right" id="index12"></div>
+<div onclick="AddSymbol(2,0)" class="botton left" id="index20"></div>
+<div onclick="AddSymbol(2,1)" class="botton center" id="index21"></div>
+<div onclick="AddSymbol(2,2)" class="botton right" id="index22"></div>
+</section>
+
+<h1>
+answer:<span id="answer"></span>
+</h1>
+
+
+
+<script>
+ window.symb = "o"; //по умолчанию начинаем с Х
+
+const n = 3; //размерность нашего поля
+
+//создание массива двумерного
+window.xo = [];
+let arr = window.xo;
+arr.length = n;
+for (let i = 0; i < n; i++) {
+  // Создать подмассив в массиве
+  arr[i] = [];
+  arr[i].length = n
+}
+//arr=[["x","x","o"],["x","x","o"],["o","o","o"]]; //перепроверила работу проверок
+//console.log(arr);
+
+// myFunction();
+
+
+//функции проверки совпедения через массив
+function isRow() {
+  for (let i = 0; i < n; i++) {
+
+    let row = arr[i][0]; //присваиваем значение первого элемента в строке, чтоб далее с ним свавнивать остальные символы в ряде
+    let counter = 0; //счетчик количества совпадений
+    if (row === "o" || row === "x") {
+      for (let j = 0; j < n; j++) {
+        if (row == arr[i][j]) {
+          counter++;
+        }
+      }
+    }
+    //console.log(counter);
+    if (counter == n) { //если количество совпадений совпадает
+      console.log(" win the " + row);
+    }
+  }
+}
+
+function isColumn() {
+  //сделать аналогично как и в isRow()
+}
+
+function isDiagonal1() {
+  let diag = arr[0][0]; //присваиваем значение первого элемента в строке, чтоб далее с ним свавнивать остальные символы в ряде
+  let counter = 0; //счетчик количества совпадений
+  if (diag === "o" || diag === "x") {
+    for (let i = 0; i < n; i++) {
+      if (arr[i][i] == diag) {
+        counter++;
+      }
+    }
+  }
+  if (counter == n) {
+    console.log("  win the " + diag);
+
+  }
+
+}
+
+function isDiagonal2() {
+  //аналогично как и в isDiagonal1() только j=n-i 
+}
+
+
+
+//ф-я ввода х или о
+
+function AddSymbol(i, j) {
+
+  //Добавить проверку чтоб ячейка была пустая
+  if (window.symb === "x") {
+    window.symb = "o";
+  } else {
+    window.symb = "x";
+  }
+  arr[i][j] = window.symb;
+  let element = document.getElementById('index' + i + j).innerText = window.symb;
+  isRow();
+  isColumn();
+  isDiagonal1();
+  isDiagonal2();
+}
+
+</script>
+
+<style>
+.game{
+  margin: 30px;
+  display: flex;
+  flex-direction: row;
+flex-wrap: wrap;
+width: 155px;
+}
+div {margin:0;
+  width: 50px;
+  height: 50px;
+   margin: 0;
+  padding: 0;  
+  font-size: 45px;
+  text-align: center;  
+}
+
+.up, .middle {
+  border-bottom: solid;
+}
+.left, .center {
+  border-right: solid;
+}
+</style>
